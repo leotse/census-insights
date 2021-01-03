@@ -7,10 +7,12 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 
 from models.age_group import AgeGroup
+from models.education_level import EducationLevel
 from models.income_group import IncomeGroup
 from utils.census_utils import (
     get_age_group_stats,
     get_income_groups,
+    get_education_levels,
     iterate_census_area,
 )
 
@@ -48,6 +50,10 @@ def load_census_to_db(
             IncomeGroup,
             [get_income_groups(area_stats) for area_stats in area_stats_batch],
         )
+        session.bulk_insert_mappings(
+            EducationLevel,
+            [get_education_levels(area_stats) for area_stats in area_stats_batch],
+        )
         i += 1
 
 
@@ -57,6 +63,7 @@ if __name__ == "__main__":
     try:
         session.execute(text(f"TRUNCATE TABLE {AgeGroup.__tablename__}"))
         session.execute(text(f"TRUNCATE TABLE {IncomeGroup.__tablename__}"))
+        session.execute(text(f"TRUNCATE TABLE {EducationLevel.__tablename__}"))
         session.commit()
 
         load_census_to_db(session, batch_size=50, max_areas=108)

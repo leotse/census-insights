@@ -69,7 +69,7 @@ def get_age_group_stats(area_stats: List[Dict[str, int]]) -> Dict[str, Any]:
     }
 
 
-def get_income_groups(area_stats: List[Dict[str, int]]):
+def get_income_groups(area_stats: List[Dict[str, int]]) -> Dict[str, Any]:
     return {
         **_get_labels(area_stats),
         "total": parseInt(area_stats[690]["value"]),
@@ -84,4 +84,21 @@ def get_income_groups(area_stats: List[Dict[str, int]]):
         "income_90k_to_100k": parseInt(area_stats[703]["value"]),
         "income_100k_to_150k": parseInt(area_stats[705]["value"]),
         "income_150k_plus": parseInt(area_stats[706]["value"]),
+    }
+
+
+def get_education_levels(area_stats: List[Dict[str, int]]) -> Dict[str, Any]:
+    return {
+        **_get_labels(area_stats),
+        "total": parseInt(area_stats[1682]["value"]),
+        "no_diploma": parseInt(area_stats[1683]["value"]),
+        "secondary_school_diploma": parseInt(area_stats[1684]["value"]),
+        "apprenticeship_trades_diploma": parseInt(area_stats[1686]["value"]),
+        "college_diploma": parseInt(area_stats[1689]["value"]),
+        "university_diploma_below_bachelor": parseInt(area_stats[1690]["value"]),
+        "bachelor_degree": parseInt(area_stats[1692]["value"]),
+        "university_diploma_above_bachelor": parseInt(area_stats[1693]["value"]),
+        "medical_degree": parseInt(area_stats[1694]["value"]),
+        "masters_degree": parseInt(area_stats[1695]["value"]),
+        "earned_doctorate": parseInt(area_stats[1696]["value"]),
     }
