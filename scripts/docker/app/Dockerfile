@@ -1,3 +1,8 @@
-FROM python:3.8-alpine
+FROM python:3.8-slim-buster
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+USER root
+
+COPY entrypoint.sh /entrypoint.sh
+
+WORKDIR /src
+ENTRYPOINT ["/entrypoint.sh"]

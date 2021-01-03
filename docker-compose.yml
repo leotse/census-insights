@@ -4,7 +4,11 @@ services:
     volumes:
       - ./src:/src
       - ./data:/data
+    environment:
+      - PYTHONPATH=/src
   db:
     image: postgis/postgis:13-3.1-alpine
+    volumes:
+      - ./scripts/docker/db/docker-entrypoint-initdb.d/20_census_canada_db.sh:/docker-entrypoint-initdb.d/20_census_canada_db.sh
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
