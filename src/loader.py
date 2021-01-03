@@ -56,9 +56,10 @@ if __name__ == "__main__":
     session = Session(engine)
     try:
         session.execute(text(f"TRUNCATE TABLE {AgeGroup.__tablename__}"))
+        session.execute(text(f"TRUNCATE TABLE {IncomeGroup.__tablename__}"))
         session.commit()
 
-        load_census_to_db(session, batch_size=5, max_areas=12)
+        load_census_to_db(session, batch_size=50, max_areas=108)
         session.commit()
     except:
         session.rollback()
