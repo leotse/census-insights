@@ -8,10 +8,12 @@ class AgeGroup(Base):
 
     id = Column(Integer, primary_key=True)
 
-    geo_code = Column(String)
+    year = Column(Integer, index=True)
+    geo_code = Column(String, index=True)
     geo_name = Column(String)
     geo_level = Column(Integer)
 
+    total = Column(Integer)
     age_0_to_4 = Column(Integer)
     age_5_to_9 = Column(Integer)
     age_10_to_14 = Column(Integer)
