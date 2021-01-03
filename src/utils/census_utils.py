@@ -1,5 +1,5 @@
 import csv
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from utils.data_utils import parseInt
 
@@ -34,13 +34,19 @@ def iterate_census_area():
         i += 1
 
 
-def get_age_group_stats(area_stats: List[Dict[str, int]]):
+def _get_labels(area_stats: List[Dict[str, int]]):
     return {
         "id": None,
         "year": parseInt(area_stats[0]["year"]),
         "geo_level": parseInt(area_stats[0]["geo_level"]),
         "geo_code": area_stats[0]["geo_code"],
         "geo_name": area_stats[0]["geo_name"],
+    }
+
+
+def get_age_group_stats(area_stats: List[Dict[str, int]]) -> Dict[str, Any]:
+    return {
+        **_get_labels(area_stats),
         "total": parseInt(area_stats[7]["value"]),
         "age_0_to_4": parseInt(area_stats[9]["value"]),
         "age_5_to_9": parseInt(area_stats[10]["value"]),
@@ -60,4 +66,22 @@ def get_age_group_stats(area_stats: List[Dict[str, int]]):
         "age_75_to_79": parseInt(area_stats[26]["value"]),
         "age_80_to_84": parseInt(area_stats[27]["value"]),
         "age_85_plus": parseInt(area_stats[28]["value"]),
+    }
+
+
+def get_income_groups(area_stats: List[Dict[str, int]]):
+    return {
+        **_get_labels(area_stats),
+        "total": parseInt(area_stats[690]["value"]),
+        "income_10k_to_20k": parseInt(area_stats[695]["value"]),
+        "income_20k_to_30k": parseInt(area_stats[696]["value"]),
+        "income_30k_to_40k": parseInt(area_stats[697]["value"]),
+        "income_40k_to_50k": parseInt(area_stats[698]["value"]),
+        "income_50k_to_60k": parseInt(area_stats[699]["value"]),
+        "income_60k_to_70k": parseInt(area_stats[700]["value"]),
+        "income_70k_to_80k": parseInt(area_stats[701]["value"]),
+        "income_80k_to_90k": parseInt(area_stats[702]["value"]),
+        "income_90k_to_100k": parseInt(area_stats[703]["value"]),
+        "income_100k_to_150k": parseInt(area_stats[705]["value"]),
+        "income_150k_plus": parseInt(area_stats[706]["value"]),
     }

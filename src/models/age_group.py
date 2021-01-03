@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String
 
-from .base import Base
+from .base import CanadaCensusBase
 
 
-class AgeGroup(Base):
+class AgeGroup(CanadaCensusBase):
     __tablename__ = "age_groups"
 
     id = Column(Integer, primary_key=True)
