@@ -6,13 +6,6 @@ from .base import CanadaCensusBase
 class AgeGroup(CanadaCensusBase):
     __tablename__ = "age_groups"
 
-    id = Column(Integer, primary_key=True)
-
-    year = Column(Integer, index=True)
-    geo_code = Column(String, index=True)
-    geo_name = Column(String)
-    geo_level = Column(Integer)
-
     total = Column(Integer)
     age_0_to_4 = Column(Integer)
     age_5_to_9 = Column(Integer)
