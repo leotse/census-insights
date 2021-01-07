@@ -7,6 +7,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 
+from config import get_db_url
 from models.age_group import AgeGroup
 from models.dissemination_area import DisseminationArea
 from models.education_level import EducationLevel
@@ -94,8 +95,9 @@ def load_dissemination_area_to_db(session: Session):
 
     # project to lat/lon coordinates
     print("projecting to epsg:4326")
-    df = df[:50].to_crs("epsg:4326")  # TODO: remove debug limit
+    df = df.to_crs("epsg:4326")
     df["geometry"] = df.geometry.apply(lambda s: f"SRID=4326;{s.wkt}")
+    print(df)
 
     # finally write to db
     print("writing to db")
@@ -103,7 +105,8 @@ def load_dissemination_area_to_db(session: Session):
 
 
 if __name__ == "__main__":
-    engine = create_engine("postgres://postgres@db/census_canada")
+    db_url = get_db_url()
+    engine = create_engine(db_url)
     session = Session(engine)
     try:
         # session.execute(text(f"TRUNCATE TABLE {AgeGroup.__tablename__}"))
