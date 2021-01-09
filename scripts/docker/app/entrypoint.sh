@@ -2,6 +2,4 @@
 
 pip install -r /src/requirements.txt
 
-echo "Starting Python app.."
-
-tail -f /dev/null
+uvicorn api.main:app --host 0.0.0.0 --reload

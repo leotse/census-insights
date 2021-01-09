@@ -113,13 +113,14 @@ if __name__ == "__main__":
         # session.execute(text(f"TRUNCATE TABLE {IncomeGroup.__tablename__}"))
         # session.execute(text(f"TRUNCATE TABLE {EducationLevel.__tablename__}"))
         # session.commit()
-        # load_census_to_db(session, batch_size=200, max_areas=5038)
+        # load_census_to_db(session, batch_size=200)
         # session.commit()
 
-        session.execute(text(f"TRUNCATE TABLE {DisseminationArea.__tablename__}"))
-        session.commit()
-        load_dissemination_area_to_db(session)
-        session.commit()
+        # session.execute(text(f"TRUNCATE TABLE {DisseminationArea.__tablename__}"))
+        # session.commit()
+        # load_dissemination_area_to_db(session)
+        # session.commit()
+        pass
     except:
         session.rollback()
         raise

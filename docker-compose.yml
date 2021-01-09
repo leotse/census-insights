@@ -1,6 +1,8 @@
 services:
   app:
     build: ./scripts/docker/app
+    ports:
+      - "8000:8000"
     volumes:
       - ./src:/src
       - ./data:/data
