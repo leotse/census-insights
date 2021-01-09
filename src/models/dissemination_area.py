@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String
 from geoalchemy2 import Geometry
+from sqlalchemy import Column, Integer, String
 
 from .base import Base
 

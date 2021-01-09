@@ -1,6 +1,7 @@
 from typing import Optional
 
 from fastapi import FastAPI
+
 from services.dissemination_area import query_dissemination_area
 
 app = FastAPI()
