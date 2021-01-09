@@ -1,13 +1,13 @@
 from geoalchemy2 import Geometry
+from geoalchemy2.shape import to_shape
+from shapely.geometry import mapping
 from sqlalchemy import Column, Integer, String
 
-from .base import Base
+from .base import ModelBase
 
 
-class DisseminationArea(Base):
+class DisseminationArea(ModelBase):
     __tablename__ = "dissemination_area"
-
-    id = Column(Integer, primary_key=True)
 
     dissemination_area_id = Column(String(8))  # DAUID
     province_id = Column(String)  # PRUID
@@ -32,3 +32,9 @@ class DisseminationArea(Base):
     census_tract_name = Column(String(7))  # CTNAME
     aggregated_dissemination_area_id = Column(String(8))  # ADAUID
     geometry = Column(Geometry())
+
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "geometry": mapping(to_shape(self.geometry)),
+        }

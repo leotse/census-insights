@@ -3,7 +3,10 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from models import Session
 from services.dissemination_area import query_dissemination_area
+from services.stats import query_stats
+
 
 app = FastAPI()
 app.add_middleware(
@@ -16,10 +19,24 @@ app.add_middleware(
 
 
 @app.get("/api/stats")
-def read_stats(lat: float, lon: float):
-    return {"location": f"{lat},{lon}"}
+def read_stats(dissemination_area_id: str):
+    try:
+        session = Session()
+        return query_stats(dissemination_area_id, session=session)
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
 
 
 @app.get("/api/dissemination-area")
 def get_dissemination_area(lng: float, lat: float):
-    return query_dissemination_area(lng, lat)
+    try:
+        session = Session()
+        return query_dissemination_area(lng, lat, session=session)
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
