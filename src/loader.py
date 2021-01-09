@@ -2,12 +2,9 @@ from pprint import pprint
 from typing import Optional
 
 import geopandas as gpd
-from sqlalchemy import create_engine
-from sqlalchemy.engine import Engine
-from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 
-from config import get_db_url
+from models import Session
 from models.age_group import AgeGroup
 from models.dissemination_area import DisseminationArea
 from models.education_level import EducationLevel
@@ -105,9 +102,7 @@ def load_dissemination_area_to_db(session: Session):
 
 
 if __name__ == "__main__":
-    db_url = get_db_url()
-    engine = create_engine(db_url)
-    session = Session(engine)
+    session = Session()
     try:
         # session.execute(text(f"TRUNCATE TABLE {AgeGroup.__tablename__}"))
         # session.execute(text(f"TRUNCATE TABLE {IncomeGroup.__tablename__}"))
