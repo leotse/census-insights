@@ -1,10 +1,31 @@
 from typing import List
 
+from sqlalchemy import func, select, or_
+
+from api_models import LngLat
+from decorators import use_db
 from models.age_group import AgeGroup
-from sqlalchemy import func, select
+from models.dissemination_area import DisseminationArea
 
 
-def query_stats(dissemination_area_ids: List[str], *, session=None):
+@use_db
+def query_stats_by_lnglats(lnglats: List[LngLat], *, session=None):
+    query = session.query(AgeGroup)
+    query = query.filter(DisseminationArea.dissemination_area_id == AgeGroup.geo_code)
+
+    # build location filteres
+    location_filters = [
+        func.ST_Contains(DisseminationArea.geometry, f"SRID=4326;POINT({lnglat.lng} {lnglat.lat})")
+        for lnglat in lnglats
+    ]
+    query = query.filter(or_(*location_filters))
+
+    print(query.all())
+    return {"hello": 123}
+
+
+@use_db
+def query_stats_by_ids(dissemination_area_ids: List[str], *, session=None):
     age_groups = (
         session.query(
             func.sum(AgeGroup.total).label("total"),
