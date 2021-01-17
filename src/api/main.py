@@ -29,6 +29,6 @@ def read_stats(dissemination_area_ids: List[str] = Query([])):
     return query_stats_by_ids(dissemination_area_ids)
 
 
-@app.post("/api/stats_by_lnglat")
+@app.post("/api/stats_by_lnglats")
 def read_stats(lnglats: List[LngLat]):
     return query_stats_by_lnglats(lnglats)
