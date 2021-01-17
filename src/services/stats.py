@@ -10,6 +10,9 @@ from models.dissemination_area import DisseminationArea
 
 @use_db
 def query_stats_by_lnglats(lnglats: List[LngLat], *, session=None):
+    if not lnglats:
+        return []
+
     # sum age groups
     query = session.query(
         func.sum(AgeGroup.total).label("total"),
@@ -69,6 +72,9 @@ def query_stats_by_lnglats(lnglats: List[LngLat], *, session=None):
 
 @use_db
 def query_stats_by_ids(dissemination_area_ids: List[str], *, session=None):
+    if not dissemination_area_ids:
+        return []
+
     age_groups = (
         session.query(
             func.sum(AgeGroup.total).label("total"),

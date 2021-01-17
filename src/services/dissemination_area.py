@@ -11,6 +11,8 @@ from decorators import use_db
 
 @use_db
 def query_dissemination_area_by_lnglats(lnglats: List[LngLat], *, session=None):
+    if not lnglats:
+        return []
     location_filters = [
         func.ST_Contains(DisseminationArea.geometry, f"SRID=4326;POINT({lnglat.lng} {lnglat.lat})")
         for lnglat in lnglats
