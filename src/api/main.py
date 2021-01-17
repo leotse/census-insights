@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from api_models import LngLat
-from services.dissemination_area import query_dissemination_area
+from services.dissemination_area import query_dissemination_area_by_lnglats
 from services.stats import query_stats_by_ids, query_stats_by_lnglats
 
 app = FastAPI()
@@ -19,16 +19,16 @@ app.add_middleware(
 )
 
 
-@app.get("/api/dissemination-area")
-def get_dissemination_area(lng: float, lat: float):
-    return query_dissemination_area(lng, lat)
+@app.post("/api/dissemination-areas-by-lnglats")
+def get_dissemination_area(lnglats: List[LngLat]):
+    return query_dissemination_area_by_lnglats(lnglats)
 
 
-@app.get("/api/stats_by_ids")
+@app.get("/api/stats-by-ids")
 def read_stats(dissemination_area_ids: List[str] = Query([])):
     return query_stats_by_ids(dissemination_area_ids)
 
 
-@app.post("/api/stats_by_lnglats")
+@app.post("/api/stats-by-lnglats")
 def read_stats(lnglats: List[LngLat]):
     return query_stats_by_lnglats(lnglats)
